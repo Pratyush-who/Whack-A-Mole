@@ -27,32 +27,29 @@ function run() {
         setInterval(() => {
             hole.removeChild(img);
             run();
-        }, 1300);
+        }, 1000);
     });
     timer = setInterval(() => {
         hole.removeChild(img);
         run();
 
-    }, 1300);
+    }, 1200);
 }
 
 function updateTimer() {
     timerElement.textContent = remainingTime;
+
     if (remainingTime > 0) {
         remainingTime--;
-console.log("H")
-    } 
-
-else {
-    time("clear")
-    console.log(end)
-if(end === false){
-        alert("Countdown finished!");
-        score = 0;
+    } else {
+        clearInterval(timerInterval);
         end = true;
-remainingTime = 20;
-console.log("A")
-    }}
+        alert("Game over! Final score: " + score);
+        score = 0;
+        remainingTime = 20;
+        scoree.innerText = score;
+        newgame.disabled = false; 
+    }
 }
 
 let timerInterval;
@@ -66,18 +63,17 @@ console.log("dshgf")
 }
 else{
      timerInterval = setInterval(updateTimer, 1000);
-
 }
-
 }
-
 run()
-
 
 newgame.addEventListener('click', () => {
 end = false
     score = 0;
+    newgame.disabled=true;
+    setTimeout(function() {
+        newgame.disabled = false;
+    }, 18000);
     scoree.innerText = score;
-time("start")
-    updateTimer();
+    time("start")
 });

@@ -11,6 +11,10 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  cursor:none;
+}
+.custom-cursor{
+  opacity: .3;
 }
 h1 {
   font-size: 2rem;
@@ -89,6 +93,7 @@ pointer-events: none;
 transform: translate(-25% ,-60%);
 }
 
+
 button {
   padding: 12px 30px;
   font-size: 16px;
@@ -115,4 +120,8 @@ button:active {
 button:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.5);
+}
+#hard{
+  height: 30px;
+  width: 30px;
 }

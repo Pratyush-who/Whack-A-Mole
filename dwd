@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Whack-a-Mole Game</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="game-container">
+      <h1>WHACK-A-MOLE!</h1>
+      <div class="sc_ti">
+        <p>Score: <span id="score">0</span></p>
+        <p>Time Left: <span id="time">20</span></p>
+      </div>
+      <div class="grid">
+        <div class="hole" id="hole1">
+</div>
+        <div class="hole" id="hole2"></div>
+        <div class="hole" id="hole3"></div>
+        <div class="hole" id="hole4"></div>
+        <div class="hole" id="hole5"></div>
+        <div class="hole" id="hole6"></div>
+        <div class="hole" id="hole7"></div>
+        <div class="hole" id="hole8"></div>
+        <div class="hole" id="hole9"></div>
+      </div>
+      <div class="cursor"></div>
+      <button id="startButton">Start Game</button>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+body {
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    background-image: url(https://static.vecteezy.com/system/resources/previews/014/572/097/non_2x/background-of-green-grass-field-cartoon-drawing-free-vector.jpg);
+    background-position: center;
+    background-size: contain;
+    margin: 0;
+    padding: 0;
+    color: #e5e7eb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  h1 {
+    font-size: 2rem;
+    color: yellow;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+  .game-container {
+    max-width: 600px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+    border: 1px solid #4b5563;
+  }
+  p {
+    font-size: 1.5rem;
+    color: #fff;
+    margin: 10px 0;
+    font-weight: 600;
+  }
+  
+  #score,#time {
+    font-weight: bold;
+    color: #facc15;
+  }
+  .sc_ti {
+    width: 20vw;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 32px;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin: 20px 0;
+  }
+  
+  .hole {
+    width: 100px;
+    height: 100px;
+    background-color: #794321;
+    border-radius: 50%;
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease-in-out;
+    overflow: hidden; 
+  }
+  
+  .hole img{
+  position: relative;
+  width: 70%;
+  transform: translateY(10%);
+  animation: animate .3s linear forwards;
+  }
+  @keyframes animate {
+    0%{
+  bottom: -100%;
+  }
+  100%{
+  bottom: 0%;
+  }
+  }
+  
+  .cursor{
+  position: absolute;
+  height: 150px;
+  width: 150px;
+  background: url(./Lovepik_com-401156996-cartoon-hammer.png);
+  background-size: 100%;
+  pointer-events: none;
+  transform: translate(-25% ,-60%);
+  }
+  
+  .cursor:active{
+  
+  }
+  
+  button {
+    padding: 12px 30px;
+    font-size: 16px;
+    border: none;
+    background: linear-gradient(135deg, #2563eb, #9333ea);
+    color: white;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: transform 0.1s ease, box-shadow 0.1s ease,
+      background-color 0.2s ease;
+  }
+  
+  button:hover {
+    background: linear-gradient(135deg, #1e40af, #7c3aed);
+  }
+  
+  button:active {
+    transform: scale(0.95);
+  }
+  
+  button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.5);
+  }
+
+  let currsor = document.querySelector('.cursor');
+  let holes = document.querySelectorAll('.hole');
+  let scoree = document.querySelector('#score');
+  let score = 0;
+  let newgame = document.querySelector('#startButton');
+  const timerElement = document.getElementById("time");
+  let end = false;
+  let remainingTime = 20;
+  document.addEventListener('mousemove', (e) => {
+      currsor.style.left = e.pageX + 'px';
+      currsor.style.top = e.pageY + 'px';
+  });
+  
+  function run() {
+      let i = Math.floor(Math.random() * holes.length);
+      // let timerInterval = setInterval(updateTimer, 1000);
+  
+      let hole = holes[i];
+      let img = document.createElement('img');
+      img.src = 'mole.png';
+      hole.appendChild(img);
+      let timer = null;
+      img.addEventListener('click', () => {
+          img.src = 'mole-whacked.png';
+          score += 10;
+          scoree.innerText = score;
+          setInterval(() => {
+              hole.removeChild(img);
+              run();
+          }, 1000);
+      });
+      timer = setInterval(() => {
+          hole.removeChild(img);
+          run();
+  
+      }, 1200);
+  }
+  
+  function updateTimer() {
+      timerElement.textContent = remainingTime;
+      if (remainingTime > 0) {
+          remainingTime--;
+  console.log("H")
+      } 
+  
+  else {
+      time("clear")
+      console.log(end)
+  if(end === false){
+          alert("Countdown finished!");
+          score = 0;
+          end = true;
+  remainingTime = 20;
+  console.log("A")
+      }}
+  }
+  
+  let timerInterval;
+  
+  const time = (x) =>{
+  
+  if(x === "clear"){
+  console.log("dshgf")
+      clearInterval(timerInterval);
+  
+  }
+  else{
+       timerInterval = setInterval(updateTimer, 1000);
+  
+  }
+  }
+  
+  run()
+  
+  newgame.addEventListener('click', () => {
+  end = false
+      score = 0;
+      scoree.innerText = score;
+      time("start")
+  });  
+
+This is my whack a mole, when i m pressing start button, it is making more moles and increasing the timer speed
+fix it
